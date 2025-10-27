@@ -1,0 +1,31 @@
+name: Release Node.js app
+
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: express-app
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        context: express-app
+        file: express-app/Dockerfile
+        push: true
+        tags: joaonunovalente/express-app:latest
