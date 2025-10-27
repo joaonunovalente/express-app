@@ -21,7 +21,6 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        context: express-app
         file: Dockerfile
         push: true
         tags: joaonunovalente/express-app:latest
